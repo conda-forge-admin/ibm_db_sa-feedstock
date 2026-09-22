@@ -13,30 +13,27 @@ source:
 
 build:
   number: 1
+  noarch: python
   script: ${{ PYTHON }} -m pip install . -vv
 
 requirements:
-  build:
-    - if: build_platform != target_platform
-      then:
-        - python
-        - cross-python_${{ target_platform }}
-    - ${{ stdlib("c") }}
   host:
-    - python
+    - python ${{ python_min }}.*
     - pip
     - setuptools
-    - libxml2-devel
   run:
-    - python
-    - setuptools
-    - sqlalchemy
+    - python >=${{ python_min }}
+    - sqlalchemy >=0.7.3
+    - ibm_db >=2.0.0
 
 tests:
   - python:
       imports:
         - ibm_db_sa
-      pip_check: false
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
 
 about:
   license: Apache-2.0
