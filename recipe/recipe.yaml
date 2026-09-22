@@ -1,15 +1,14 @@
 schema_version: 1
 
 context:
-  name: ibm_db_sa
   version: "0.4.4"
 
 package:
-  name: ${{ name|lower }}
+  name: ibm_db_sa
   version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
+  url: https://pypi.org/packages/source/i/ibm_db_sa/ibm_db_sa-${{ version }}.tar.gz
   sha256: f2567853fd095821964d6a6880e54fddee249d68cc835a3fd0c7d1cdd6a01055
 
 build:
@@ -19,9 +18,9 @@ build:
 requirements:
   build:
     - if: build_platform != target_platform
-      then: python
-    - if: build_platform != target_platform
-      then: cross-python_${{ target_platform }}
+      then:
+        - python
+        - cross-python_${{ target_platform }}
     - ${{ stdlib("c") }}
   host:
     - python
